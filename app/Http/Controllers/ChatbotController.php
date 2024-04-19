@@ -8,6 +8,135 @@ use Illuminate\Http\Request;
 
 class ChatbotController extends Controller
 {
+      
+
+    public function generateResponse($input, $roboter)
+    {
+        $Roboter = ucfirst($roboter);
+
+    
+        if (preg_match('/\b(hallo|hi|guten tag)\b/', $input)) {
+            $greetings = [
+                "Hallo! Wie kann ich Ihnen heute helfen?",
+                "Guten Tag! Womit kann ich dienen?",
+                "Hi! Was kann ich für Sie tun?"
+            ];
+            return $greetings[array_rand($greetings)];
+        }
+    
+        if (preg_match('/\b(problem|fehler|defekt)\b/', $input) && !$roboter) {
+            return "Es tut mir leid zu hören, dass Sie ein Problem haben. Können Sie mir mehr Details geben, wie den Produktnamen (Cleanbug, Windowfly, Gardenbeetle)?";
+        }
+    
+        if ($roboter) {
+            if ($roboter === 'windowfly') {
+                if (preg_match('/\b(haftet|klebt|hält)\b/', $input)) {
+                    if (preg_match('/\b(nicht|runter|)\b/', $input)) {
+                        return 'Es scheint, dass der Haftungsmechanismus Ihres Windowfly nicht richtig funktioniert. Bitte erhöhen Sie die Haftungseinstellung in der zugehörigen App unter den Einstellungen für die Saugkraft. Sollte das Problem weiterhin bestehen, prüfen Sie, ob die Haftflächen sauber und frei von Staub sind.';
+                    } else if (preg_match('/\b(zu sehr)\b/', $input)) {
+                        return 'Falls Ihr Windowfly zu stark an der Oberfläche haftet, empfehle ich, die Haftungseinstellung in der App zu reduzieren. Dies verhindert Schäden an Ihren Fenstern und erleichtert das Abnehmen des Gerätes.';
+                    }
+                } else if (preg_match('/\b(fällt)\b/', $input) && preg_match('/\b(runter|ab)\b/', $input)) {
+                    return 'Es tut mir sehr leid zu hören, dass Ihr Windowfly herunterfällt. Bitte überprüfen Sie, ob die Saugnäpfe vollständig sauber und intakt sind. Sollte das Problem weiterhin bestehen, könnte dies auf ein mechanisches Problem hinweisen. Kontaktieren Sie bitte unseren Kundensupport für weitere Hilfe.';
+                } else if (preg_match('/\b(geht|kommt|bekomme)\b/', $input)) {
+                    if (preg_match('/\b(nicht)\b/', $input)) {
+                        if (preg_match('/\b(ab|runter)\b/', $input)) {
+                            return 'Wenn Ihr Windowfly sich nicht von der Oberfläche löst, stellen Sie bitte sicher, dass die Funktion zum Lösen in der App aktiviert ist. Sollte das Problem anhalten, könnte dies auf ein technisches Problem hindeuten.';
+                        } else if (preg_match('/\b(aus)\b/', $input)) {
+                            return 'Es klingt, als ob Ihr Windowfly sich nicht ausschalten lässt. Bitte versuchen Sie, das Gerät über die App auszuschalten. Wenn dies fehlschlägt, trennen Sie das Gerät von der Stromversorgung und kontaktieren Sie unseren Support.';
+                        }
+                    } else if (preg_match('/\b(aus)\b/', $input)) {
+                        return 'Wenn Ihr Windowfly unerwartet ausgeht, könnte dies ein Zeichen für ein Stromversorgungsproblem sein. Überprüfen Sie bitte die Batterie oder die Stromversorgung und stellen Sie sicher, dass alles korrekt angeschlossen ist.';
+                    }
+                } else if (preg_match('/\b(problem|fehler|defekt|kaputt|schwierigkeiten|update|updaten)\b/', $input)) {
+                    if (preg_match('/\b(software)\b/', $input)) {
+                        return "{$Roboter} scheint ein Softwareproblem zu haben. Ich empfehle Ihnen, den Roboter auf die Werkseinstellungen zurückzusetzen. Falls das Problem weiterhin besteht, wenden Sie sich bitte an unseren Support für eine detailliertere Diagnose und mögliche Updates.";
+                    }
+                    if (preg_match('/\b(hardware)\b/', $input)) {
+                        return "{$Roboter} könnte ein Hardwareproblem haben. Überprüfen Sie alle sichtbaren Komponenten auf Schäden. Falls Teile beschädigt sind oder das Problem weiterhin auftritt, kontaktieren Sie bitte unseren Support für eine Reparatur oder den Austausch von Teilen.";
+                    }
+                    return "Ich habe Ihr Problem nicht ganz verstanden. Könnten Sie bitte das Problem mit Ihrem {$Roboter} genauer beschreiben? Unser Support-Team erreichen Sie unter bug.support@gmail.com, sie helfen Ihnen gerne weiter.";
+                } else {
+                    return 'Es tut mir leid zu hören, dass Sie Probleme mit Ihrem Windowfly haben. Können Sie bitte nähere Angaben zu den Schwierigkeiten machen? Je genauer Sie das Problem beschreiben, desto besser kann ich Ihnen helfen.';
+                }
+            }
+
+
+
+            
+            else if ($roboter === 'cleanbug') {
+                if (preg_match('/\b(saugt|wischt|putzt)\b/', $input)) {
+                    if (preg_match('/\b(nicht|schlecht)\b/', $input)) {
+                        return 'Wenn Ihr Cleanbug nicht effektiv saugt oder wischt, überprüfen Sie bitte, ob der Auffangbehälter voll oder die Bürsten verstopft sind. Reinigen Sie diese Komponenten regelmäßig, um eine optimale Leistung zu gewährleisten.';
+                    } else if (preg_match('/\b(zu stark|zu viel)\b/', $input)) {
+                        return 'Wenn Sie finden, dass Ihr Cleanbug zu stark saugt oder die Böden zu nass hinterlässt, passen Sie bitte die entsprechenden Einstellungen in der App an. Reduzieren Sie die Saugkraft oder die Wassermenge für den Wischmodus.';
+                    }
+                
+            } else if (preg_match('/\b(geht)\b/', $input) && preg_match('/\b(aus)\b/', $input)) {
+                return 'ohhh dann mach ihn an';
+            }
+                
+                
+                else if (preg_match('/\b(steigt|treppen)\b/', $input) && preg_match('/\b(nicht)\b/', $input)) {
+                    return 'Wenn Ihr Cleanbug Schwierigkeiten hat, Treppen zu steigen, stellen Sie sicher, dass keine kleinen Objekte oder Staubpartikel die Sensoren blockieren. Überprüfen Sie auch, ob die Software auf dem neuesten Stand ist, da dies die Navigationsfähigkeit verbessern kann.';
+                } else if (preg_match('/\b(lädt|aufladen|batterie)\b/', $input)) {
+                    if (preg_match('/\b(nicht)\b/', $input)) {
+                        return 'Wenn Ihr Cleanbug nicht auflädt, überprüfen Sie bitte, ob die Ladestation richtig angeschlossen ist und keine Fremdkörper die Kontakte blockieren. Es könnte auch hilfreich sein, die Kontakte vorsichtig zu reinigen.';
+                    }
+                } else if (preg_match('/\b(problem|fehler|defekt|kaputt|schwierigkeiten|update|updatet)\b/', $input)) {
+                    if (preg_match('/\b(software)\b/', $input)) {
+                        return "{$Roboter} scheint ein Softwareproblem zu haben. Ein Zurücksetzen auf die Werkseinstellungen könnte helfen. Wenn das Problem weiterhin besteht, kontaktieren Sie bitte unseren Support.";
+                    } else if (preg_match('/\b(hardware)\b/', $input)) {
+                        return "{$Roboter} könnte ein Hardwareproblem haben. Bitte überprüfen Sie alle sichtbaren Komponenten auf Schäden. Wenn Teile beschädigt sind oder das Problem weiterhin auftritt, wenden Sie sich an unseren Kundendienst.";
+                    }
+                    return "Ich habe Ihr Problem nicht ganz verstanden. Könnten Sie bitte das Problem mit Ihrem {$Roboter} genauer beschreiben? Unser Support-Team erreichen Sie unter bug.support@gmail.com, sie helfen Ihnen gerne weiter.";
+                } else {
+                    return 'Es tut mir leid zu hören, dass Sie Probleme mit Ihrem Cleanbug haben. Können Sie bitte nähere Angaben zu den Schwierigkeiten machen?';
+                }
+            }
+
+
+
+
+            
+            else if ($roboter === 'gardenbeetle') {
+                if (preg_match('/\b(mäht|unkraut)\b/', $input)) {
+                    if (preg_match('/\b(nicht)\b/', $input)) {
+                        return 'Wenn Ihr Gardenbeetle den Rasen nicht mäht oder das Unkraut nicht effektiv entfernt, überprüfen Sie bitte, ob die Schneidklingen scharf und frei von Blockaden sind. Stellen Sie außerdem sicher, dass die Sensoren sauber sind, um eine korrekte Navigation zu gewährleisten.';
+                    }
+                
+                } else if (preg_match('/\b(geht)\b/', $input) && preg_match('/\b(aus)\b/', $input)) {
+                    return 'ohhh dann mach ihn an';
+                }
+                
+                else if (preg_match('/\b(batterie|aufladen)\b/', $input)) {
+                    if (preg_match('/\b(nicht)\b/', $input)) {
+                        return 'Wenn der Gardenbeetle nicht auflädt, stellen Sie sicher, dass die Ladestation korrekt angeschlossen ist und prüfen Sie die Batteriekontakte auf Verschmutzungen. Es könnte notwendig sein, die Batterie zu ersetzen, wenn sie ihre Ladekapazität verliert.';
+                    }
+                } else if (preg_match('/\b(problem|fehler|defekt|kaputt)\b/', $input)) {
+                    if (preg_match('/\b(software)\b/', $input)) {
+                        return "{$Roboter} scheint ein Softwareproblem zu haben. Bitte versuchen Sie einen Neustart und prüfen Sie, ob Updates verfügbar sind. Falls das Problem weiterhin besteht, wenden Sie sich an unseren Support.";
+                    } else if (preg_match('/\b(hardware)\b/', $input)) {
+                        return "{$Roboter} könnte ein Hardwareproblem haben. Überprüfen Sie auf sichtbare Schäden und stellen Sie sicher, dass keine Fremdkörper die Bewegung behindern. Kontaktieren Sie unseren Support für weitere technische Unterstützung.";
+                    }
+                    return "Ich habe Ihr Problem nicht ganz verstanden. Könnten Sie bitte das Problem mit Ihrem {$Roboter} genauer beschreiben? Unser Support-Team erreichen Sie unter bug.support@gmail.com, sie helfen Ihnen gerne weiter.";
+                } else {
+                    return 'Es tut mir leid zu hören, dass Sie Probleme mit Ihrem Gardenbeetle haben. Können Sie bitte genauere Informationen zu den Schwierigkeiten geben?';
+                }
+            }
+            
+        }
+        
+    
+        $fallbacks = [
+            "Entschuldigung, ich habe das nicht verstanden. Können Sie das wiederholen?",
+            "Ich bin mir nicht sicher, wie ich darauf antworten soll. Können Sie Ihre Anfrage näher erläutern?",
+            "Könnten Sie bitte Ihre Frage anders formulieren? Ich bin hier, um zu helfen!"
+        ];
+        return $fallbacks[array_rand($fallbacks)];
+    }
+    
+
     
     protected  $responses = [
         'hallo' => 'Hallo! Ich freue mich, Ihnen behilflich zu sein. Wie kann ich Ihnen heute weiterhelfen?',
@@ -81,7 +210,8 @@ class ChatbotController extends Controller
         }
         return response()->json([
             'response' => $this->responses[$input] ?? $randomMessage,
-            'success' => $successResponse
+            'success' => $successResponse,
+
 
         ]);
     }
@@ -91,5 +221,28 @@ class ChatbotController extends Controller
         return response()->json([
             "test" => "Helloworld"
         ]);
+    }
+    public function test2(){
+        return response()->json([
+            "test2" => "Helloworld2"
+        ]);
+    }
+
+
+
+    public function getResponse2 (Request $request){
+        $input = strtolower($request->input('bot'));
+        
+        $roboter = $request->input('roboter');
+
+        $response = $this->generateResponse($input, $roboter);
+
+
+        return response()->json([
+            'user_input' => $input,
+            'response' => $response,
+            // 'roboter' => $roboter
+        ]);
+
     }
 }
