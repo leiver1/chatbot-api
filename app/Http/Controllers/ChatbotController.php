@@ -85,4 +85,11 @@ class ChatbotController extends Controller
 
         ]);
     }
+
+
+    public function test(){
+        return response()->json([
+            "test" => "Helloworld"
+        ]);
+    }
 }

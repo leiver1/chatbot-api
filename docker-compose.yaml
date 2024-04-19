@@ -14,6 +14,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: Minecraft4Life
       MYSQL_HOST: mysql
+    restart: always
 
 
   mysql:
