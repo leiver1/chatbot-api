@@ -30,7 +30,7 @@ class ChatbotController extends Controller
     
         if ($roboter) {
             if ($roboter === 'windowfly') {
-                if (preg_match('/\b(haftet|klebt|hält|hängt)\b/', $input)) {
+                if (preg_match('/\b(haftet|klebt|hält|hängt|runtergefallen)\b/', $input)) {
                     if (preg_match('/\b(nicht|runter|)\b/', $input)) {
                         return 'Es scheint, dass der Haftungsmechanismus Ihres Windowfly nicht richtig funktioniert. Bitte erhöhen Sie die Haftungseinstellung in der zugehörigen App unter den Einstellungen für die Saugkraft. Sollte das Problem weiterhin bestehen, prüfen Sie, ob die Haftflächen sauber und frei von Staub sind.';
                     } else if (preg_match('/\b(zu sehr|fest)\b/', $input)) {
@@ -119,7 +119,7 @@ class ChatbotController extends Controller
        
                 
                 
-                else if (preg_match('/\b(steigt|treppen)\b/', $input) && preg_match('/\b(nicht|nie)\b/', $input)) {
+                else if (preg_match('/\b(steigt|treppen|treppe)\b/', $input) && preg_match('/\b(nicht|nie|runter)\b/', $input)) {
                     return 'Wenn Ihr Cleanbug Schwierigkeiten hat, Treppen zu steigen, stellen Sie sicher, dass keine kleinen Objekte oder Staubpartikel die Sensoren blockieren. Überprüfen Sie auch, ob die Software auf dem neuesten Stand ist, da dies die Navigationsfähigkeit verbessern kann.';
                 } else if (preg_match('/\b(lädt|aufladen|batterie)\b/', $input)) {
                     if (preg_match('/\b(nicht|nie)\b/', $input)) {
